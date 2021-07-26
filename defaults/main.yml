@@ -1,0 +1,63 @@
+---
+
+py_version: 3.9.6
+
+py_download_pkg_name: "Python-{{ py_version }}"
+
+py_download_url: "https://www.python.org/ftp/python/{{ py_version }}/{{ py_download_pkg_name }}.tgz"
+
+py_download_dir: /tmp
+
+py_src_dir_path: "{{ py_download_dir }}/{{ py_download_pkg_name }}"
+
+py_src_pkg_path: "{{ py_download_dir }}/{{ py_download_pkg_name }}.tgz"
+
+py_config_opts: ""
+
+# whether or not to make this version of python the default.
+py_make_default: no
+
+# whether or not to delete the downloaded source code. By setting it
+# to false and using a custom var for `pyfsrc_download_dir` a kind of
+# local caching can be achieved.
+py_cleanup_downloads: no
+
+# If true, the python source for the version will be downloaded and
+# installed again even if it's found on the system.
+py_force_install: no
+
+py_extra_sys_pkgs: []
+
+# .. envvar:: python__core_packages3 [[[
+#
+# List of core Python 3 APT packages to install. These packages will be
+# installed in the "raw" mode as well as during normal role operation.
+python__core_packages3:
+  - 'python3'
+  - 'python3-apt'
+
+                                                                   # ]]]
+# .. envvar:: python__base_packages3 [[[
+#
+# List of base Python 3 packages to install via APT. These packages should allow
+# creation of Python 3 virtual environments and installation of Python packages
+# via the :command:`pip3` command from the PyPI repository, as well as Ansible
+# opration on the remote host.
+python__base_packages3:
+  - 'python3-httplib2'
+  - 'python3-pip'
+  - 'python3-setuptools'
+  - 'python3-pycurl'
+  - 'python3-future'
+  - 'python3-virtualenv'
+  - 'python3-wheel'
+  - 'virtualenv'
+
+                                                                   # ]]]
+# .. envvar:: python__packages3 [[[
+#
+# List of Python 3 APT packages which should be installed on all hosts in the
+# Ansible inventory.
+python__packages3: []
+
+                                                                   # ]]]
