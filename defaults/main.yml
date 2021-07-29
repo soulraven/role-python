@@ -1,42 +1,122 @@
 ---
 
+# .. envvar:: py_version [[[
+#
+# List o packages to be installed for compile time dependencies
 py_version: 3.9.6
+# ]]]
 
+# .. envvar:: py_download_pkg_name [[[
+#
+# List o packages to be installed for compile time dependencies
 py_download_pkg_name: "Python-{{ py_version }}"
+# ]]]
 
+# .. envvar:: py_download_url [[[
+#
+# List o packages to be installed for compile time dependencies
 py_download_url: "https://www.python.org/ftp/python/{{ py_version }}/{{ py_download_pkg_name }}.tgz"
+# ]]]
 
+# .. envvar:: py_download_archive_md5 [[[
+#
+# List o packages to be installed for compile time dependencies
+py_download_archive_md5: '798b9d3e866e1906f6e32203c4c560fa'
+# ]]]
+
+# .. envvar:: py_download_dir [[[
+#
+# List o packages to be installed for compile time dependencies
 py_download_dir: /tmp
+# ]]]
 
+# .. envvar:: py_src_dir_path [[[
+#
+# List o packages to be installed for compile time dependencies
 py_src_dir_path: "{{ py_download_dir }}/{{ py_download_pkg_name }}"
+# ]]]
 
+# .. envvar:: py_src_pkg_path [[[
+#
+# List o packages to be installed for compile time dependencies
 py_src_pkg_path: "{{ py_download_dir }}/{{ py_download_pkg_name }}.tgz"
+# ]]]
 
-py_config_opts: ""
+# .. envvar:: py_config_opts_base [[[
+#
+# List o packages to be installed for compile time dependencies
+py_config_opts_base: 
+  - "--enable-optimizations"
+# ]]]
+
+# .. envvar:: py_conf_opts_extra [[[
+#
+# List o packages to be installed for compile time dependencies
+py_conf_opts_extra: []
+# ]]]
 
 # whether or not to make this version of python the default.
-py_make_default: no
+py_make_default: true
 
 # whether or not to delete the downloaded source code. By setting it
-# to false and using a custom var for `pyfsrc_download_dir` a kind of
+# to false and using a custom var for `py_download_dir` a kind of
 # local caching can be achieved.
-py_cleanup_downloads: no
+py_cleanup_downloads: true
 
 # If true, the python source for the version will be downloaded and
 # installed again even if it's found on the system.
-py_force_install: no
+py_force_install: true
 
-py_extra_sys_pkgs: []
-
-# .. envvar:: python__core_packages3 [[[
+# .. envvar:: py_pillow [[[
 #
-# List of core Python 3 APT packages to install. These packages will be
-# installed in the "raw" mode as well as during normal role operation.
-python__core_packages3:
-  - 'python3'
-  - 'python3-apt'
+# List o packages to be installed for compile time dependencies
+py_pillow: true
+# ]]]
 
-                                                                   # ]]]
+# .. envvar:: py_lxml [[[
+#
+# List o packages to be installed for compile time dependencies
+py_lxml: true
+# ]]]
+
+# .. envvar:: python3_packages_compile_dependencies [[[
+#
+# List o packages to be installed for compile time dependencies
+python3_packages_compile_dependencies:
+  - autotools-dev
+  - blt-dev
+  - bzip2
+  - dpkg-dev
+  - g++-multilib
+  - gcc-multilib
+  - libbluetooth-dev
+  - libbz2-dev
+  - libexpat1-dev
+  - libffi-dev
+  - libffi6
+  - libffi6-dbg
+  - libgdbm-dev
+  - libgpm2
+  - libncursesw5-dev
+  - libreadline-dev
+  - libsqlite3-dev
+  - libssl-dev
+  - libtinfo-dev
+  - liblzma-dev
+  - mime-support
+  - net-tools
+  - netbase
+  - quilt
+  - tk-dev
+  - zlib1g-dev
+# ]]]
+
+# .. envvar:: python3_packages_compile_dependencies_extra [[[
+#
+# List o packages to be installed for compile time dependencies extra packages
+python3_packages_compile_dependencies_extra: []
+# ]]]
+
 # .. envvar:: python__base_packages3 [[[
 #
 # List of base Python 3 packages to install via APT. These packages should allow
@@ -53,11 +133,6 @@ python__base_packages3:
   - 'python3-wheel'
   - 'virtualenv'
 
-                                                                   # ]]]
-# .. envvar:: python__packages3 [[[
-#
-# List of Python 3 APT packages which should be installed on all hosts in the
-# Ansible inventory.
-python__packages3: []
+# ]]
 
-                                                                   # ]]]
+# ]]]

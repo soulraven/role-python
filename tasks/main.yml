@@ -1,2 +1,26 @@
 ---
-# tasks file for role-virtualenv
+
+- name: Update APT sources
+  become: true
+  apt:
+    update_cache=yes
+
+- name: Derive python version
+  set_fact:
+    py_exec: "python{{ py_version|regex_replace('(\\d+\\.\\d+)\\..*$', '\\1') }}"
+
+- name: "Check if {{ py_download_pkg_name }} is installed"
+  command: "which {{ py_exec }}"
+  ignore_errors: yes
+  register: is_installed
+  changed_when: is_installed.rc == 0
+
+- name: Install required packages for basic compile
+  package:
+    name: '{{ q("flattened", (python3_packages_compile_dependencies + python3_packages_compile_dependencies_extra)) }}'
+    state: present
+    autoclean: yes
+
+- name: Install Python '{{ py_version }}'
+  include: install.yml
+  when: py_force_install or is_installed.rc != 0

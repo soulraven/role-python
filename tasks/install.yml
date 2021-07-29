@@ -1,0 +1,58 @@
+---
+
+- name: "{{ py_download_pkg_name }} | Download"
+  get_url:
+    url="{{ py_download_url }}"
+    dest="{{ py_download_dir }}"
+    checksum="md5:{{ py_download_archive_md5 }}"
+  when: not is_installed.rc == 0
+
+- name: "{{ py_download_pkg_name}} | Uncompress"
+  unarchive:
+    src: "{{ py_src_pkg_path }}"
+    dest: "{{ py_download_dir }}"
+    creates: "{{ py_src_dir_path}}"
+    copy: no
+  when: not is_installed.rc == 0
+
+- name: "{{ py_download_pkg_name }} | Compile"
+  command: './configure {{ q("flattened", (py_config_opts_base + py_conf_opts_extra)) | join(" ") }}'
+  args:
+    chdir: "{{ py_src_dir_path }}"
+  become: true
+  register: configure_result
+  changed_when: "configure_result.rc == 0"
+
+- name: "{{ py_download_pkg_name }} | Make"
+  command: make -j 2
+  args:
+    chdir: "{{ py_src_dir_path }}"
+  become: true
+  register: make_install_result
+  changed_when: "make_install_result.rc == 0"
+
+- name: "{{ py_download_pkg_name }} | Make install"
+  command: make install
+  args:
+    chdir: "{{ py_src_dir_path }}"
+  become: true
+  register: make_result
+  changed_when: "make_result.rc == 0"
+  when: py_make_default|bool
+
+- name: "{{ py_download_pkg_name }} | Make altinstall"
+  command: make altinstall
+  args:
+    chdir: "{{ py_src_dir_path }}"
+  become: true
+  register: make_altinstall_result
+  changed_when: "make_altinstall_result.rc == 0"
+  when: not py_make_default|bool
+
+- name: Clean up the source files
+  file:
+    path:
+      - "{{ py_src_pkg_path }}"
+      - "{{ py_src_dir_path }}"
+    state: absent
+  when: py_cleanup_downloads|bool
