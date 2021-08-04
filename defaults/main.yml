@@ -63,20 +63,10 @@ py_make_default: true
 # local caching can be achieved.
 py_cleanup_downloads: true
 
-# If true, the python source for the version will be downloaded and
-# installed again even if it's found on the system.
-py_force_install: true
-
-# .. envvar:: py_pillow [[[
+# .. envvar:: py_setup_virtualenv [[[
 #
-# List o packages to be installed for compile time dependencies
-py_pillow: true
-# ]]]
-
-# .. envvar:: py_lxml [[[
-#
-# List o packages to be installed for compile time dependencies
-py_lxml: true
+# Enable the setup of virtualenv packages and functions
+py_setup_virtualenv: true
 # ]]]
 
 # .. envvar:: python3_packages_compile_dependencies [[[
@@ -134,5 +124,8 @@ python__base_packages3:
   - 'virtualenv'
 
 # ]]
+
+virtualenv_pip3_packages:
+  - virtualenvwrapper
 
 # ]]]

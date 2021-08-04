@@ -1,0 +1,7 @@
+---
+
+- name: Install specific PIP3 packages
+  pip:
+    name: "{{ virtualenv_pip3_packages }}"
+    executable: pip3
+    state: latest

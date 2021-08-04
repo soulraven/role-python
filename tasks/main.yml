@@ -23,4 +23,8 @@
 
 - name: Install Python '{{ py_version }}'
   include: install.yml
-  when: py_force_install or is_installed.rc != 0
+  when: is_installed.rc != 0
+
+- name: Setup virtualenv packages
+  include: virtualenv.yml
+  when: py_setup_virtualenv|bool
